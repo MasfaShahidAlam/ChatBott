@@ -10,17 +10,10 @@ type Message = {
 };
 
 const perfumeImages: Record<string, string> = {
-  "Rose Bloom":
-    "https://static.vecteezy.com/system/resources/previews/025/268/422/large_2x/womens-pink-perfume-bottle-isolated-on-white-background-elegant-fragrance-and-luxury-floral-scent-generative-ai-photo.jpg",
-
-  "Royal Oud":
-    "https://static.vecteezy.com/system/resources/previews/046/828/342/non_2x/elegant-transparent-bottle-of-blue-perfume-isolated-on-transparent-background-free-png.png",
-
-  "Midnight Musk":
-    "https://tse3.mm.bing.net/th/id/OIP.Hu_IBXecpNZdg9Wsi0JiNAHaHa?r=0&pid=Api&h=220&P=0",
-
-  "Blue Storm":
-    "https://tse2.mm.bing.net/th/id/OIP.izM13UA05OTIChk-fFTNJQHaHa?r=0&pid=Api&h=220&P=0",
+  "Rose Bloom": "/rose-bloom.png",
+  "Royal Oud": "/royal-oud.png",
+  "Midnight Musk": "/midnight-musk.png",
+  "Blue Storm": "/blue-storm.png",
 };
 
 export default function Home() {
@@ -58,7 +51,13 @@ export default function Home() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ message: userMessage }),
+                body: JSON.stringify({
+          message: userMessage,
+          history: messages.map((m) => ({
+            role: m.role === "user" ? "user" : "model",
+            text: m.text,
+          })),
+        }),
       });
 
       const data = await response.json();
@@ -92,6 +91,8 @@ export default function Home() {
     "Delivery details",
     "Perfumes under 3000",
   ];
+
+  
 
   return (
     <main className="min-h-screen bg-[#F4EFE7] px-4 py-8 text-[#211A17]">
